@@ -1,0 +1,181 @@
+:root{
+  background-color: rgb(212, 212, 212);
+
+  --FormPrev: #f0f0f0;
+  --Border-Viol: rgb(103, 58, 183);
+  --Border-Blue: #4285f4;
+}
+
+#root{
+  position: relative;
+  top: 0px;
+  left: 0px;
+
+  width: 100%;
+  
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  font-family: "Manrope", sans-serif;
+  user-select: none;
+
+}
+
+.Page{
+  position: relative;
+  display: block;
+  /* background-color: aqua; */
+  height: auto;
+  max-width: 720px;
+}
+
+@media (min-width: 700px) {
+  .Page{
+    min-width: 570px;
+    width: 60vw;
+  }
+}
+@media (max-width: 700px) {
+  .Page{
+    width: 90vw;
+  }
+}
+
+
+.FormPreview{
+  position: relative;
+  display: block;
+  left: 5%;
+  width: 90%;
+  height: 130px;
+
+  background-color: var(--FormPrev);
+  border-radius: 8px;
+  border-top: 12px solid var(--Border-Viol);
+  /* border-left: 8px solid var(--Border-Blue); */
+  cursor: pointer;
+}
+
+
+.FormPrevTitle{
+  margin-top: 22px;
+  margin-bottom: 22px;
+  margin-left: 5%;
+  max-width: 90%;
+  overflow-x: hidden;
+}
+.FormPrevDescription{
+  margin-left: 5%;
+  max-width: 90%;
+  overflow-x: hidden;
+}
+
+.InvisPlaceHolder{
+  position: relative;
+  width: 100%;
+  height: 18px;
+}
+
+.ClearInput {
+  /* Убирает внешний вид по умолчанию */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  
+  /* Сброс границ и фона */
+  border: none;
+  background: none;
+  
+  /* Сброс отступов */
+  padding: 0;
+  margin: 0;
+  
+  /* Сброс внешнего вида при фокусе (если нужно) */
+  outline: none;
+}
+
+.VerticalMargin{
+  margin-top: 2.5%;
+}
+
+.TextFieldInput{
+  position: relative;
+  width: 90%;
+  height: auto;
+  overflow-y: hidden;
+
+  transition: .3s;
+}
+
+.InputField{
+  width: 100%;
+  transition: .15s;
+}
+.InputField:focus{
+  border-bottom: 4px solid yellowgreen;
+  /* box-shadow: 0px 7px 0px 0px #000000; */
+}
+
+.AddQuestionButton{
+  position: relative;
+  background-color: var(--FormPrev);
+  cursor: pointer;
+
+  font-size: larger;
+
+  left: 5%;
+  width: 90%;
+  height: 8vh;
+  border-radius: 8px;
+  border-bottom: 8px solid var(--Border-Viol);
+}
+
+.AddQuestionButton:active{
+  transform: translateY(5px);
+}
+
+.QuestionBuilder{
+  position: relative;
+  padding: 1px;
+  left: 5%;
+  width: calc(90% - 10px);
+  height: auto;
+  min-height: 100px;
+  background-color: var(--FormPrev);
+  border-left: 8px solid var(--Border-Blue);
+  border-radius: 8px;
+}
+
+.QuestionTitleBuilder{
+  width: 45%;
+}
+
+.DropDownList{
+  position: relative;
+  /* width: 45%; */
+  border: none;
+
+
+  flex-grow: 1;
+}
+
+.AnswersList{
+  position: relative;
+  display: block;
+  width: 90%;
+  left: 5%;
+  height: auto;
+}
+
+.AnswerInput{
+  width: 45%;
+  margin-top: 5px;
+}
+
+.AddButton{
+  position: relative;
+  flex-grow: 1;
+  height: 4vh;
+}
