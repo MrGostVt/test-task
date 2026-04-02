@@ -21,6 +21,7 @@ class ServerController {
             }
         `, {answers, formId});
         console.log(result);
+        return result.success || false;
     }
 
     async createForm(form: Form){
@@ -31,6 +32,7 @@ class ServerController {
             }
         `, {form});
         console.log(result);
+        return result.success || false;
     }
 
     async getForms () {
@@ -43,7 +45,7 @@ class ServerController {
             }
         `);
         
-        return (result.forms || []) as FormPrev;
+        return (result.forms || []) as FormPrev[];
     }
     async getForm(id: number){
         const result = await this.#makeRequest(`

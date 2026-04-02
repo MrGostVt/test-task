@@ -1,7 +1,7 @@
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { FormPreview } from "../components/forms/formPreview";
-import { useLoaderData } from "react-router";
+import { useLoaderData, useNavigate } from "react-router";
 import type { Form } from "../common/types/form.type";
 import { server } from "../common/serverController";
 import { QuestionBlock } from "../components/forms/question";
@@ -21,6 +21,7 @@ export const FillFormPage = ({}) => {
     const form = useLoaderData<Form>();
     const {questions} = form;
     const [userAnswers, setUserAnswers] = useState<UserAnswer[]>(questions.map((val) => {return {questionId: val.id, answers: []}}));
+    const navigate = useNavigate();
 
     const HandleUserAnswer = useCallback((id: number, answers: (string | number)[]) => {
         setUserAnswers(userAnswers.map((val) => {
@@ -38,7 +39,7 @@ export const FillFormPage = ({}) => {
                 ))
             }
             <QuestionButton callback={() => {
-                server.fillForm(userAnswers, form.id);
+                server.fillForm(userAnswers, form.id).then((result) => {console.log(result + ' RESGAG');if(result) navigate('/', {replace: true})});
             }} title="Send"/>
         </div>
     );

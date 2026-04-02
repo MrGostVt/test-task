@@ -4,6 +4,7 @@ import { QuestionButton } from "../components/forms/questionButton";
 import { QuestionBuilder } from "../components/forms/questionButilder";
 import type { Question } from "../common/types/question.type";
 import { server } from "../common/serverController";
+import { useNavigate } from "react-router";
 
 const placeholders = {
     name: 'New form',
@@ -14,6 +15,7 @@ export const FormBuilderPage = ({}) => {
     const [questions, setQuestions] = useState<Question[]>([]);
     const [title, setTitle] = useState(placeholders.name);
     const [description, setDescription] = useState(placeholders.description);
+    const navigate = useNavigate();
 
     const AddQuestion = useCallback(() => {
         console.log('YOOO')
@@ -42,7 +44,7 @@ export const FormBuilderPage = ({}) => {
             ))}
             <QuestionButton callback={AddQuestion} title="Add a question" borderless={true}/>
             <QuestionButton callback={() => {
-                if(questions.length > 0) server.createForm({id: 0, name: title, questions, description});
+                if(questions.length > 0) server.createForm({id: 0, name: title, questions, description}).then((result) => {if(result) navigate('/', {replace: true})});
                 else{alert('The form must have at least 1 question.')}
             }} title="Send"/>
         </div>
