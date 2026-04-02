@@ -6,13 +6,14 @@ interface Props {
     classes?: string
     defaults?: string
     callback: (val: string) => void
+    disabled?: boolean
 }
 
-export const TextInput = ({placeholder = '', height, fontSize, classes = '', defaults = '', callback}: Props) => {
+export const TextInput = ({placeholder = '', height, disabled=false, fontSize, classes = '', defaults = '', callback}: Props) => {
 
     return(
         <div className={`TextFieldInput ${classes}`}>
-            <input className="ClearInput InputField" type="text" placeholder={placeholder}
+            <input disabled={disabled} className="ClearInput InputField" type="text" placeholder={placeholder}
             style={{
                 fontSize, height
             }} defaultValue={defaults}

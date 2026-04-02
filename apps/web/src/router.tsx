@@ -18,12 +18,12 @@ export const router = createBrowserRouter([
                 loader: FormsPageLoader,
             },
             {
-                path: ':id/fill',
+                path: 'forms/:id/fill',
                 element: <FillFormPage/>,
                 loader: FillFormLoader,
             },
             {
-                path: 'new',
+                path: 'forms/new',
                 element: <FormBuilderPage/>,
             },
         ]

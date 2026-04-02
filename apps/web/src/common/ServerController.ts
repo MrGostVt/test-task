@@ -1,6 +1,7 @@
 import type { Form } from "./types/form.type";
 import type { FormPrev } from "./types/formPreview.type";
 import type { DefaultResponse } from "./types/response.type";
+import type { UserAnswer } from "./types/user-answers.type";
 
 
 class ServerController {
@@ -11,6 +12,25 @@ class ServerController {
                 resolve(true);
             }, time);
         })
+    }
+
+    async fillForm(answers: UserAnswer[], formId: number){
+        const result = await this.#makeRequest(`
+            mutation fillForm($formId: Int!, $answers: [UserAnswers!]!){
+                success
+            }
+        `, {answers, formId});
+        console.log(result);
+    }
+
+    async createForm(form: Form){
+        console.log(form);
+        const result = await this.#makeRequest(`
+            mutation createForm($input: Form!) {
+                success
+            }
+        `, {form});
+        console.log(result);
     }
 
     async getForms () {

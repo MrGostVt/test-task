@@ -1,15 +1,17 @@
 import { useEffect, useMemo, useState } from "react";
-import { QuestionTypes, type Answer } from "../../common/types/question.type"
+import { QuestionTypes, type Answer, type Question } from "../../common/types/question.type"
 import { DropDownList } from "../input/dropDownList"
 import { TextInput } from "../input/textinput"
+import { QuestionButton } from "./questionButton";
 
 const types = QuestionTypes.map((val,i) => {return {value: val, id: i}});
 
-export const QuestionBuilder = ({}) => {
+export const QuestionBuilder = (props: {id: number, callback: (id: number, data: Question | null) => void}) => {
+    const {callback, id} = props;
     const [type, setType] = useState<number>(0);
     const [answers, setAnswers] = useState<Answer[]>([]);
     const [rightAnswers, setRightAnswers] = useState<number[]>([])
-    const [title, setTitle] = useState<string>('');
+    const [title, setTitle] = useState<string>('Title');
 
     function HandleAnswersUpdate(property: string, value: any){
         switch(property){
@@ -17,6 +19,10 @@ export const QuestionBuilder = ({}) => {
             case 'rightAnswers': setRightAnswers(value); break;
         }
     }
+
+    useEffect(() => {
+        callback(id, {id, type, answers, rightAnswers, title});
+    }, [type, answers, rightAnswers, title]);
 
     return(
         <div className="QuestionBuilder VerticalMargin">
@@ -28,7 +34,7 @@ export const QuestionBuilder = ({}) => {
                 height: '5.5vh', gap: '10%'
             }}>
                 <TextInput callback={(val) => {setTitle(val);}} placeholder="Title"
-                fontSize="2em" classes="QuestionTitleBuilder"
+                fontSize="2em" classes="QuestionTitleBuilder" defaults="Title"
                 />
                 <DropDownList callback={(id) => {
                     setType(id)
@@ -36,6 +42,9 @@ export const QuestionBuilder = ({}) => {
             </div>
             
             <AnswersBuilder type={type} callback={HandleAnswersUpdate}/>
+            <button className="AddButton" style={{left: '5%', width: '90%', marginBottom: '10px'}} onClick={() =>{
+                callback(id, null);
+            }}>Remove</button>    
         </div>
     )
 }
@@ -63,17 +72,17 @@ const AnswersBuilder = (props: AnswerProps) => {
 
     const answerList = useMemo(() => {
         switch(type){
-            case 3: return <TextInput callback={() => {}} placeholder="Answer"/>;
+            case 3: return <TextInput disabled={true} callback={() => {}} placeholder="Answer"/>;
             case 2: return <input type="date" disabled={true}></input>;
             case 1:
             case 0:
                 return answers.map((val) => (
                     <div style={{
                         position: 'relative', display: 'flex', alignItems: 'center',
-                        flexDirection: 'row',
+                        flexDirection: 'row', gap: '10px', marginTop: '5px',
                     }} key={val.id}>
                         <input name="answers" checked={rightAnswers.includes(val.id)} value={val.id} type={type === 0? 'radio': 'checkbox'} 
-                        onChange={(ev) => {
+                        onChange={() => {
                             
                             if(rightAnswers.includes(val.id) && type === 1){
                                 setRightAnswers(rightAnswers.filter(answer => answer != val.id));
@@ -87,6 +96,11 @@ const AnswersBuilder = (props: AnswerProps) => {
                         }}>
                         </input>
                         {val.value}
+                        <button style={{width: '45%', marginLeft: 'auto'}} onClick={(ev) => {
+                            ev.preventDefault();
+                            setAnswers(answers.filter(answer => answer.id !== val.id));
+                            setRightAnswers(rightAnswers.filter(answer => answer !== val.id));
+                        }}>Remove</button>
                     </div>
                 ));
         }
@@ -96,17 +110,17 @@ const AnswersBuilder = (props: AnswerProps) => {
         switch(type){
             case 0:
             case 1:
-                return <div style={{display: 'flex', position: 'relative', gap: '10%', height: '5vh', width: '100%'}}>
+                return <div style={{display: 'flex', position: 'relative', marginTop:'5px', gap: '10%', height: '5vh', width: '100%'}}>
                     <TextInput callback={(val) => {setInput(val)}} placeholder="Answer" classes="AnswerInput"
                     fontSize="16px" defaults="Answer"
                     />
-                    <button className="AddButton" onClick={(ev) => {
-                        setAnswers([...answers, {id: answers.length, value: tempInput}])
+                    <button className="AddButton" onClick={() => {
+                        setAnswers([...answers, {id: +(new Date()), value: tempInput}])
                     }}>Add</button>
                 </div>;
             default: return null;
         }
-    }, [type, answers, rightAnswers])
+    }, [type, answers, rightAnswers, tempInput])
 
 
     return(
@@ -115,7 +129,6 @@ const AnswersBuilder = (props: AnswerProps) => {
                 {answerList}
             </form>
             {AnswerInput}
-            <div className="InvisPlaceHolder" />
         </div>
     )
 }

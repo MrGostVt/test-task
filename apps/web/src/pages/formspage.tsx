@@ -2,7 +2,7 @@ import { FormPreview } from '../components/forms/formPreview'
 import { useAppDispatch, useAppSelector } from '../redux/hooks';
 import type { FormPrev } from '../common/types/formPreview.type';
 import { updateForms } from '../redux/formsSlice';
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { server } from '../common/serverController';
 import { useLoaderData, useNavigate } from 'react-router';
 
@@ -30,11 +30,21 @@ export const FormsPage = ({}) => {
         dispatch(updateForms(formsList))
     }, []);
 
+    const HandleSelect = useCallback((id: number, property?: string) => {
+        if(!property) return;
+        
+        switch(property){
+            case 'fill': navigate(`forms/${id}/fill`); break;
+            case 'view': navigate(`forms/${id}/responces`); break;
+        }
+
+    }, [forms]);
+
     return(
         <div className='Page'>
-            <FormPreview data={createForm} callback={() => {navigate('new')}}/>
+            <FormPreview data={createForm} callback={() => {navigate('forms/new')}}/>
             {forms.map(val => (
-                <FormPreview data={val} callback={() => {}} key={val.id}/>
+                <FormPreview data={val} callback={HandleSelect} expandable={true} key={val.id}/>
             ))}
         </div>
     )

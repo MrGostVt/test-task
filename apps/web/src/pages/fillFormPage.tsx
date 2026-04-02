@@ -1,5 +1,12 @@
+
+import { useCallback, useEffect, useState } from "react";
+import { FormPreview } from "../components/forms/formPreview";
+import { useLoaderData } from "react-router";
+import type { Form } from "../common/types/form.type";
 import { server } from "../common/serverController";
-import { useEffect } from "react";
+import { QuestionBlock } from "../components/forms/question";
+import { QuestionButton } from "../components/forms/questionButton";
+import type { UserAnswer } from "../common/types/user-answers.type";
 
 export const FillFormLoader = async ({params}: any) => {
     const {id} = params;
@@ -11,15 +18,28 @@ export const FillFormLoader = async ({params}: any) => {
 }
 
 export const FillFormPage = ({}) => {
-    // const form = useLoaderData();
+    const form = useLoaderData<Form>();
+    const {questions} = form;
+    const [userAnswers, setUserAnswers] = useState<UserAnswer[]>(questions.map((val) => {return {questionId: val.id, answers: []}}));
 
-    useEffect(() => {
-
-    }, []);
+    const HandleUserAnswer = useCallback((id: number, answers: (string | number)[]) => {
+        setUserAnswers(userAnswers.map((val) => {
+            if(val.questionId === id) return {questionId: id, answers};
+            else return val;
+        }))    
+    }, [questions, userAnswers]);
 
     return(
         <div className="Page">
-
+            <FormPreview data={form} disabled={true} callback={() => {}}/>
+            {
+                questions.map((val) => (
+                    <QuestionBlock data={val} updateAnswers={HandleUserAnswer} key={val.id}/>
+                ))
+            }
+            <QuestionButton callback={() => {
+                server.fillForm(userAnswers, form.id);
+            }} title="Send"/>
         </div>
     );
 }

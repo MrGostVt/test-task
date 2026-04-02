@@ -10,4 +10,5 @@ export type Question = {
     title: string,
     type: number,
     answers: Answer[],
+    rightAnswers?: (number | string)[],
 }
