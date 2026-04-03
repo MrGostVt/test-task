@@ -4,6 +4,7 @@
   --FormPrev: #f0f0f0;
   --Border-Viol: rgb(103, 58, 183);
   --Border-Blue: #4285f4;
+  --Border-Green: #42f468;
 }
 
 #root{
@@ -49,7 +50,8 @@
   display: block;
   left: 5%;
   width: 90%;
-  height: 130px;
+  height: auto;
+  min-height: 130px;
 
   background-color: var(--FormPrev);
   border-radius: 8px;

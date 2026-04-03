@@ -5,6 +5,7 @@ import App from './App';
 import { FormBuilderPage } from './pages/formBuilderPage';
 import { FormsPage, FormsPageLoader } from './pages/formspage';
 import { ResponcesPage, ResponcesPageLoader } from './pages/responcesPage';
+import { ResponcePage, ResponcePageLoader } from './pages/responceChildPage';
 
 export const router = createBrowserRouter([
     {
@@ -31,6 +32,14 @@ export const router = createBrowserRouter([
                 path: 'forms/:id/responces',
                 element: <ResponcesPage />,
                 loader: ResponcesPageLoader,
+                id: 'responces',
+                children: [
+                    {
+                        path: 'responce/:id',
+                        element: <ResponcePage />,
+                        loader: ResponcePageLoader,
+                    }
+                ]
             }
         ]
     },
