@@ -6,7 +6,7 @@ import type { Form } from "../common/types/form.type";
 import { server } from "../common/serverController";
 import { QuestionBlock } from "../components/forms/question";
 import { QuestionButton } from "../components/forms/questionButton";
-import type { UserAnswer } from "../common/types/user-answers.type";
+import type { UserAnswer } from "src/common/types/user-answers.type";
 
 export const FillFormLoader = async ({params}: any) => {
     const {id} = params;

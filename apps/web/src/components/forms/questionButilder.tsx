@@ -1,8 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
-import { QuestionTypes, type Answer, type Question } from "../../common/types/question.type"
+import { QuestionTypes, type Answer, type Question } from "@repo/shared"
 import { DropDownList } from "../input/dropDownList"
 import { TextInput } from "../input/textinput"
-import { QuestionButton } from "./questionButton";
 
 const types = QuestionTypes.map((val,i) => {return {value: val, id: i}});
 

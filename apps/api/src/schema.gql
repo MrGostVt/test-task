@@ -1,0 +1,72 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type AnswerDto {
+  id: ID!
+  value: String!
+}
+
+type FormDto {
+  description: String!
+  id: ID!
+  name: String!
+  questions: [QuestionDto!]!
+  userAnswers: [[UserAnswerDto!]!]!
+}
+
+input InputAnswersDto {
+  id: ID!
+  value: String!
+}
+
+input InputFormDto {
+  description: String!
+  name: String!
+  questions: [InputQuestionDto!]!
+}
+
+input InputQuestionDto {
+  answers: [InputAnswersDto!]!
+  id: ID!
+  rightAnswers: [String!]
+  title: String!
+  type: Int!
+}
+
+input InputUserAnswerDto {
+  answers: [String!]!
+  questionId: ID!
+}
+
+input InputUserAnswersDto {
+  answers: [InputUserAnswerDto!]!
+}
+
+type Mutation {
+  createForm(data: InputFormDto!): StatusResponce!
+  fillForm(formId: Float!, userAnswers: InputUserAnswersDto!): StatusResponce!
+}
+
+type Query {
+  answers(id: Int!): [FormDto!]
+  form(id: Int!): FormDto
+  forms: [FormDto!]!
+}
+
+type QuestionDto {
+  answers: [AnswerDto!]!
+  id: ID!
+  rightAnswers: [String!]!
+  title: String!
+  type: Int!
+}
+
+type StatusResponce {
+  success: Boolean!
+}
+
+type UserAnswerDto {
+  answers: [String!]!
+  questionId: ID!
+}

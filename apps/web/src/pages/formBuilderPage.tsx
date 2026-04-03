@@ -2,7 +2,7 @@ import { useCallback, useState } from "react"
 import { FormPreviewBuilder } from "../components/forms/formPreviewBuilder"
 import { QuestionButton } from "../components/forms/questionButton";
 import { QuestionBuilder } from "../components/forms/questionButilder";
-import type { Question } from "../common/types/question.type";
+import type { Question } from "src/common/types/question.type";
 import { server } from "../common/serverController";
 import { useNavigate } from "react-router";
 
