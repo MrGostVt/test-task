@@ -3,16 +3,16 @@ import { useCallback, useState } from "react";
 import { FormPreview } from "../components/forms/formPreview";
 import { useLoaderData, useNavigate } from "react-router";
 import type { Form } from "../common/types/form.type";
-import { server } from "../common/serverController";
 import { QuestionBlock } from "../components/forms/question";
 import { QuestionButton } from "../components/forms/questionButton";
 import type { UserAnswer } from "../common/types/user-answers.type";
+import { server } from "../common/Server";
 
 export const FillFormLoader = async ({params}: any) => {
-    const {id} = params;
+    const {id}: {id: number} = params;
     await server.loading(1000);
     console.log('Form data loading')
-    const result = await server.getForm(id);
+    const result = await server.getForm(+id);
     if(!result) throw new Response('Not Found', { status: 404 });
     return result;
 }
@@ -23,7 +23,7 @@ export const FillFormPage = ({}) => {
     const [userAnswers, setUserAnswers] = useState<UserAnswer[]>(questions.map((val) => {return {questionId: val.id, answers: []}}));
     const navigate = useNavigate();
 
-    const HandleUserAnswer = useCallback((id: number, answers: (string | number)[]) => {
+    const HandleUserAnswer = useCallback((id: string, answers: (string | number)[]) => {
         setUserAnswers(userAnswers.map((val) => {
             if(val.questionId === id) return {questionId: id, answers};
             else return val;
@@ -39,7 +39,7 @@ export const FillFormPage = ({}) => {
                 ))
             }
             <QuestionButton callback={() => {
-                server.fillForm(userAnswers, form.id).then((result) => {console.log(result + ' RESGAG');if(result) navigate('/', {replace: true})});
+                server.fillForm(userAnswers, +form.id).then((result) => {console.log(result + ' RESGAG');if(result) navigate('/', {replace: true})});
             }} title="Send"/>
         </div>
     );

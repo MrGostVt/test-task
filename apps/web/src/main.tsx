@@ -7,8 +7,8 @@ import { router } from './router.tsx';
 
 
 if (import.meta.env.DEV) {
-  const { worker } = await import('./mocks/browser');
-  await worker.start();
+  // const { worker } = await import('./mocks/browser');
+  // await worker.start();
 }
 
 createRoot(document.getElementById('root')!).render(

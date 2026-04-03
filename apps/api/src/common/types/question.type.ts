@@ -2,11 +2,11 @@ export const QuestionTypes = ['One answer', 'Several answers', 'Date', 'Text']
 
 
 export type Answer = {
-    id: string,
+    id: number,
     value: string
 }
 export type Question = {
-    id: string,
+    id: number,
     title: string,
     type: number,
     answers: Answer[],

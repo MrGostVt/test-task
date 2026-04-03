@@ -1,16 +1,17 @@
 import { createBrowserRouter } from 'react-router-dom';
 import { FillFormPage } from './pages/fillFormPage';
 import { FillFormLoader } from './pages/fillFormPage';
-import { FormsPage, FormsPageLoader } from './pages/formsPage';
 import App from './App';
 import { FormBuilderPage } from './pages/formBuilderPage';
+import { FormsPage, FormsPageLoader } from './pages/formspage';
+import { ResponcesPage, ResponcesPageLoader } from './pages/responcesPage';
 
 export const router = createBrowserRouter([
     {
         path: '/',
         element: <App />,
         loader: FormsPageLoader,
-        errorElement: <div>Aligator</div>,
+        errorElement: <div>Wrong request</div>,
         children: [
             {
                 index: true,
@@ -26,10 +27,15 @@ export const router = createBrowserRouter([
                 path: 'forms/new',
                 element: <FormBuilderPage/>,
             },
+            {
+                path: 'forms/:id/responces',
+                element: <ResponcesPage />,
+                loader: ResponcesPageLoader,
+            }
         ]
     },
     {
         path: '*',
-        element: <div>Bogdan</div>
+        element: <div>Wrong page</div>
     },
 ]);

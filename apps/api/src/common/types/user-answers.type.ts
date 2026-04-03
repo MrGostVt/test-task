@@ -1,4 +1,4 @@
 export type UserAnswer = {
-    questionId: string,
+    questionId: number,
     answers: (number | string)[],
 }

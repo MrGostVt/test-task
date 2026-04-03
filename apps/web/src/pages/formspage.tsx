@@ -3,7 +3,7 @@ import { useAppDispatch, useAppSelector } from '../redux/hooks';
 import type { FormPrev } from '../common/types/formPreview.type';
 import { updateForms } from '../redux/formsSlice';
 import { useCallback, useEffect } from 'react';
-import { server } from '../common/serverController';
+import { server } from '../common/Server';
 import { useLoaderData, useNavigate } from 'react-router';
 
 const createForm: FormPrev  = {
@@ -15,7 +15,7 @@ const createForm: FormPrev  = {
 export const FormsPageLoader = async () => {
     await server.loading(1000);
     const result = await server.getForms();
-    console.log(result, 'RESULT')
+    // console.log(result, 'RESULT');
     return result;
 }
 

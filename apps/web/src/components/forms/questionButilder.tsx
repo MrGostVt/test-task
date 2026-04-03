@@ -2,11 +2,10 @@ import { useEffect, useMemo, useState } from "react";
 import { QuestionTypes, type Answer, type Question } from "../../common/types/question.type"
 import { DropDownList } from "../input/dropDownList"
 import { TextInput } from "../input/textinput"
-import { QuestionButton } from "./questionButton";
 
 const types = QuestionTypes.map((val,i) => {return {value: val, id: i}});
 
-export const QuestionBuilder = (props: {id: number, callback: (id: number, data: Question | null) => void}) => {
+export const QuestionBuilder = (props: {id: string, callback: (id: string, data: Question | null) => void}) => {
     const {callback, id} = props;
     const [type, setType] = useState<number>(0);
     const [answers, setAnswers] = useState<Answer[]>([]);
@@ -56,7 +55,7 @@ interface AnswerProps {
 const AnswersBuilder = (props: AnswerProps) => {
     const {type, callback} = props;
     const [answers, setAnswers] = useState<Answer[]>([]);
-    const [rightAnswers, setRightAnswers] = useState<number[]>([]);
+    const [rightAnswers, setRightAnswers] = useState<string[]>([]);
     const [tempInput, setInput] = useState<string>('Answer');
 
     useEffect(() => {
@@ -115,7 +114,7 @@ const AnswersBuilder = (props: AnswerProps) => {
                     fontSize="16px" defaults="Answer"
                     />
                     <button className="AddButton" onClick={() => {
-                        setAnswers([...answers, {id: +(new Date()), value: tempInput}])
+                        setAnswers([...answers, {id: (+(new Date())).toString(), value: tempInput}])
                     }}>Add</button>
                 </div>;
             default: return null;

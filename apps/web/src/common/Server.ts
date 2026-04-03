@@ -1,8 +1,9 @@
-import type { Form } from "./types/form.type";
+import type { DefaultForm, Form } from "./types/form.type";
 import type { FormPrev } from "./types/formPreview.type";
 import type { DefaultResponse } from "./types/response.type";
 import type { UserAnswer } from "./types/user-answers.type";
 
+const API = import.meta.env.API || 'http://localhost:3000/graphql'
 
 class ServerController {
 
@@ -16,54 +17,103 @@ class ServerController {
 
     async fillForm(answers: UserAnswer[], formId: number){
         const result = await this.#makeRequest(`
-            mutation fillForm($formId: Int!, $answers: [UserAnswers!]!){
-                success
+            mutation fillForm($formId: ID!, $data: InputUserAnswersDto!) {
+                fillForm(
+                    formId: $formId
+                    userAnswers: $data
+                ) {
+                    success
+                }
             }
-        `, {answers, formId});
+        `, {data: {answers: answers}, formId});
         console.log(result);
-        return result.success || false;
+        if(!result) return false;
+        return result.fillForm.success || false;
     }
 
     async createForm(form: Form){
-        console.log(form);
+        const {name, description, questions} = form;
+
         const result = await this.#makeRequest(`
-            mutation createForm($input: Form!) {
-                success
+            mutation createForm($data: InputFormDto!) {
+                createForm(
+                    data: $data
+                ){
+                    success
+                }
             }
-        `, {form});
+        `, {data: {name, description, questions}});
         console.log(result);
-        return result.success || false;
+        if(!result) return false;
+        return result.createForm.success || false;
     }
 
     async getForms () {
         const result = await this.#makeRequest(`
-            query forms {
+            query {
                 forms {
                     id
                     name
+                    description
                 }
             }
         `);
-        
+
+        if(!result) return [];
         return (result.forms || []) as FormPrev[];
     }
     async getForm(id: number){
         const result = await this.#makeRequest(`
-            query fillform($id: Int!) {
+            query ($id: ID!){
                 form(id: $id) {
                     id
                     name
+                    description
                     questions {
                         id
-                        title
                         type
+                        title
+                        answers{
+                            id
+                            value
+                        }
                     }
                 }
             }
         `, {id});
 
-        return result as Form;
+        if(!result) return null;
+        return result.form as Form;
     }
+
+    async getResponces(id: number){
+        const result = await this.#makeRequest(`
+            query ($id: ID!){
+                form(id: $id) {
+                    id
+                    name
+                    description
+                    questions {
+                        id
+                        type
+                        title
+                        answers{
+                            id
+                            value
+                        }
+                    }
+                    userAnswers{
+                        questionId
+                        answers
+                    }
+                }
+            }
+        `, {id});
+
+        if(!result) return null;
+        return result.form as DefaultForm ;
+    }
+
 
     async #makeRequest(query: string, variables?: Object){
         const body = {
@@ -78,14 +128,14 @@ class ServerController {
         }
 
         try{
-            const response = await fetch('/graphql', request);
+
+            const response = await fetch(API, request);
             if(response.status > 400){
                 throw {
                     messages: ['Something went wrong'],
                     status: response.status
                 };
             }
-            
             const payload = await response.json() as DefaultResponse;
             if(!!payload.errors && payload.errors.length > 0) {
                 throw {
@@ -97,7 +147,7 @@ class ServerController {
             return payload.data;
         }
         catch(error){
-            console.log(error);
+            console.log(error, "Error");
             return null;
         }
     }
