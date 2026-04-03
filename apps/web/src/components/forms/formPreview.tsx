@@ -28,7 +28,7 @@ export const FormPreview = (props: PrevProps) => {
             }}>View</button>
         </div>
         return null;
-    }, [size, data, callback])
+    }, [size, data, callback]);
 
     return(
         <section className="FormPreview VerticalMargin" style={{

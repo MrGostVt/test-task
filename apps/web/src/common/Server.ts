@@ -101,6 +101,7 @@ class ServerController {
                             id
                             value
                         }
+                        rightAnswers
                     }
                     userAnswers{
                         questionId
