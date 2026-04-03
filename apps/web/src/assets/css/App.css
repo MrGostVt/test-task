@@ -50,7 +50,8 @@
   display: block;
   left: 5%;
   width: 90%;
-  height: 130px;
+  height: auto;
+  min-height: 130px;
 
   background-color: var(--FormPrev);
   border-radius: 8px;

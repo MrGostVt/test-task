@@ -21,7 +21,7 @@ export const FormPreview = (props: PrevProps) => {
                 ev.stopPropagation();
                 callback(data.id, 'fill');
             }}>Fill</button>
-            <button className="AddButton" onClick={(ev) => {
+            <button className="AddButton" style={{marginBottom: '15px'}} onClick={(ev) => {
                 ev.preventDefault();
                 ev.stopPropagation();
                 callback(data.id, 'view');
@@ -32,7 +32,7 @@ export const FormPreview = (props: PrevProps) => {
 
     return(
         <section className="FormPreview VerticalMargin" style={{
-            height: size? '160px': '130px', cursor: disabled? 'default':'',
+            height: '', cursor: disabled? 'default':'',
         }} onClick={(ev) => {
             ev.preventDefault();
             if(expandable) {
