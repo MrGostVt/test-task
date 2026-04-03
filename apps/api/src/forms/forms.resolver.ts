@@ -1,4 +1,4 @@
-import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { Args, ID, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { FormsService } from './forms.service';
 import { FormDto } from './dto/form.dto';
 import { InputFormDto } from './dto/inputForm.dto';
@@ -14,12 +14,7 @@ export class FormsResolver {
     }
 
     @Query(() => FormDto, { nullable: true, })
-    form(@Args('id', { type: () => Int }) id: number) {
-        return this.formsService.getForm(id);
-    }
-
-    @Query(() => [FormDto], { nullable: true })
-    answers(@Args('id', { type: () => Int }) id: number) {
+    form(@Args('id', { type: () => ID }) id: number) {
         return this.formsService.getForm(id);
     }
     
@@ -33,8 +28,8 @@ export class FormsResolver {
     @Mutation(() => StatusResponce)
     fillForm(
         @Args('userAnswers') userAnswers: InputUserAnswersDto,
-        @Args('formId') formId: number,
+        @Args('formId', {type: () => ID}) formId: number,
     ) {
         return {success: this.formsService.fillForm(formId, userAnswers)};
     }
-}
+} 

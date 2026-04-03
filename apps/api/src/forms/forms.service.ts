@@ -21,7 +21,7 @@ export class FormsService {
         return true;
     }
     fillForm(formId: number, answers: InputUserAnswersDto){
-        const index = this.ramDb.findEntry((val) => val.id === formId);
+        const index = this.ramDb.findEntry((val) => +val.id === +formId);
         if(index === -1) throw new GraphQLError('Form not found', {extensions: {code:'NOT_FOUND', http: {status: 404}}});
 
         this.ramDb.getEntry(index).userAnswers.push(answers.answers);
@@ -37,7 +37,7 @@ export class FormsService {
         return this.ramDb.getAll();
     }
     getForm(formId: number){
-        const index = this.ramDb.findEntry((val) => val.id === formId);
+        const index = this.ramDb.findEntry((val) => +val.id === +formId);
         if(index === -1) throw new GraphQLError('Form not found', {extensions: {code:'NOT_FOUND', http: {status: 404}}});
         const form = this.ramDb.getEntry(index);
         return form;

@@ -45,12 +45,11 @@ input InputUserAnswersDto {
 
 type Mutation {
   createForm(data: InputFormDto!): StatusResponce!
-  fillForm(formId: Float!, userAnswers: InputUserAnswersDto!): StatusResponce!
+  fillForm(formId: ID!, userAnswers: InputUserAnswersDto!): StatusResponce!
 }
 
 type Query {
-  answers(id: Int!): [FormDto!]
-  form(id: Int!): FormDto
+  form(id: ID!): FormDto
   forms: [FormDto!]!
 }
 

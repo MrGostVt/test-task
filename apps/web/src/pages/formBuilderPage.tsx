@@ -2,8 +2,8 @@ import { useCallback, useState } from "react"
 import { FormPreviewBuilder } from "../components/forms/formPreviewBuilder"
 import { QuestionButton } from "../components/forms/questionButton";
 import { QuestionBuilder } from "../components/forms/questionButilder";
-import type { Question } from "src/common/types/question.type";
-import { server } from "../common/serverController";
+import type { Question } from "../common/types/question.type";
+import { server } from "../common/Server";
 import { useNavigate } from "react-router";
 
 const placeholders = {
@@ -18,10 +18,9 @@ export const FormBuilderPage = ({}) => {
     const navigate = useNavigate();
 
     const AddQuestion = useCallback(() => {
-        console.log('YOOO')
-        setQuestions([...questions, {id: +new Date(), title: 'Question', type: 0, answers: []}]);
+        setQuestions([...questions, {id: (+new Date()).toString(), title: 'Question', type: 0, answers: []}]);
     }, [questions]);
-    const UpdateQuestions = useCallback((id: number, data: Question | null) => {
+    const UpdateQuestions = useCallback((id: string, data: Question | null) => {
         if(data === null) return setQuestions(questions.filter(quest => quest.id !== id));
 
         setQuestions(questions.map(val => {

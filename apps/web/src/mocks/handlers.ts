@@ -39,7 +39,7 @@ export const handlers = [
             }
         );
     }),
-    graphql.query<{form: {id: number, name: string, questions: Question[]}}>('form', ({variables}) => {
+    graphql.query<{form: {id: number, name: string, questions: Question[]}}>('fillform', ({variables}) => {
         if(!forms[variables.id]) return Response.json({
             errors: [
                 {

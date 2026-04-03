@@ -22,12 +22,7 @@
     "noUnusedParameters": true,
     "erasableSyntaxOnly": true,
     "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true,
-
-    "baseUrl": ".",
-    "paths": {
-      "@repo/shared": ["../../packages/shared/src"]
-    }
+    "noUncheckedSideEffectImports": true
   },
   "include": ["src"]
 }

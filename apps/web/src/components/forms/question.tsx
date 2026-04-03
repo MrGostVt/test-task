@@ -1,9 +1,9 @@
 import { useEffect, useMemo, useState } from "react";
+import {  type Answer, type Question } from "../../common/types/question.type"
 import { TextInput } from "../input/textinput"
-import type { Answer, Question } from "src/common/types/question.type";
 
 
-export const QuestionBlock = (props: {data: Question, updateAnswers: (id: number, value: (number | string)[]) => void}) => {
+export const QuestionBlock = (props: {data: Question, updateAnswers: (id: string, value: (number | string)[]) => void}) => {
     const {title, type, answers, id} = props.data;
     const [,setChosen] = useState<(number | string)[]>([])
 

@@ -21,7 +21,14 @@ const questions = [
 @Injectable()
 export class RamDbService {
     private store: Form[] = [    
-        {id: 0, name: 'First form', description: 'Question test form', questions: questions, userAnswers: []}
+        {id: 0, name: 'First form', description: 'Question test form', questions: questions, userAnswers: [
+            [
+                {questionId: 1775123911889, answers: [1775123918457]},
+                {questionId: 1775123912545, answers: [1775123936697,1775123936697]},
+                {questionId: 1775123913273, answers: ["2026-04-01"]},
+                {questionId: 1775123914057, answers: ["Alex"]}
+            ]
+        ]}
     ];
 
     addEntry(val: Form){
