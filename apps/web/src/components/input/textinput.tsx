@@ -20,7 +20,6 @@ export const TextInput = ({placeholder = '', height, disabled=false, fontSize, c
             onChange = {(ev) => {
                 ev.preventDefault();
                 callback(ev.target.value);
-                
             }}
             ></input>
         </div>

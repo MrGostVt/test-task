@@ -1,5 +1,5 @@
 import { Outlet, useLoaderData, useLocation, useNavigate } from "react-router";
-import { server } from "../common/Server";
+import { server } from "../application/Server";
 import type { DefaultForm } from "../common/types/form.type";
 import { FormPreview } from "../components/forms/formPreview";
 import { ResponcesPreview } from "../components/forms/responcesPreview";

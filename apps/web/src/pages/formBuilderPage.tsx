@@ -3,7 +3,7 @@ import { FormPreviewBuilder } from "../components/forms/formPreviewBuilder"
 import { QuestionButton } from "../components/forms/questionButton";
 import { QuestionBuilder } from "../components/forms/questionButilder";
 import type { Question } from "../common/types/question.type";
-import { server } from "../common/Server";
+import { server } from "../application/Server";
 import { useNavigate } from "react-router";
 
 const placeholders = {
